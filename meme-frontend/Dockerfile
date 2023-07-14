@@ -3,7 +3,10 @@ FROM node:lts-alpine AS Builder
 ENV NODE_OPTIONS --openssl-legacy-provider
 
 # install simple http server for serving static content
-RUN npm install -g http-server
+RUN export \
+  http_proxy="http://10.242.1.1:3128/" \
+  https_proxy="http://10.242.1.1:3128/" && \
+  npm install -g http-server
 
 # make the 'app' folder the current working directory
 WORKDIR /app
@@ -12,7 +15,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # install project dependencies
-RUN npm install
+RUN npm config set registry=https://st-nexus.sz.coop.ch/repository/nodejs-npmjs/ && \
+  npm install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . /app
