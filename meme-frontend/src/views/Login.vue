@@ -44,7 +44,7 @@
           if (!response) throw "Login failed. Please try again.";
           this.$store.commit("authenticated", true);
           this.$store.commit("username", this.username);
-          this.$router.push({ name: 'Home' });
+          this.$router.push({ name: 'home' });
           this.$store.commit("snackColor", "success")
           this.$store.commit("snack", "Successful Login")
         } catch (error) {

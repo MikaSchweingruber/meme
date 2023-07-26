@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import Meme from '../views/Meme.vue'
 import RandomMeme from '../components/meme/RandomMeme.vue'
 import MemeComponent from '../components/meme/MemeComponent.vue'
-import Auth from '../components/meme/Auth.vue'
 import Login from '../views/Login.vue'
+import store from "@/store/index";
+import Repository from "@/repository/RepositoryFactory"
+const auth = Repository.get('auth')
 
 Vue.use(VueRouter)
 
@@ -13,32 +14,43 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Meme
+    component: Meme,
+    meta: {
+      requiresAuth: true
+    }
   },
-  {
-    path: '/home',
-    name: 'test',
-    component: HomeView
-  },
+  
   {
     path: '/random',
     name: 'random',
-    component: RandomMeme
+    component: RandomMeme,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/memes/dark',
     name: 'dark',
-    component: Meme
+    component: Meme,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/memes/default',
     name: 'default',
-    component: Meme
+    component: Meme,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/memes/next-level',
     name: 'next level',
-    component: Meme
+    component: Meme,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/auth',
@@ -61,6 +73,28 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  if (to.meta.requiresAuth) {
+    const response = await auth.isAuthenticated()
+    if (response[0]) {
+      store.commit("authenticated", true);
+      store.commit("username", response[1].data.username)
+      store.commit("firstName", response[1].data.first_name)
+      store.commit("lastName", response[1].data.last_name)
+      store.commit("emailAddress", response[1].data.email)
+      next()
+    } else {
+      store.commit("authenticated", false);
+      next({name: "auth"})
+    }
+  } else{
+    next()
+  }
+  if (to.name == null){
+    next({name: "home"})
+  }
 })
 
 export default router

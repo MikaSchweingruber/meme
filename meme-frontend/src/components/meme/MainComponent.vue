@@ -47,7 +47,7 @@
     </v-dialog>
 
     <v-dialog v-model="dialogcomment" max-width="900px">
-      <CommentComponent :editedItem="editedItem" @close="closeComment"/>
+      <CommentComponent :editedItem="editedItem" @close="closeComment" @getmemes="getAllMemes" @reload="reloadcomments"/>
     </v-dialog>
 
   </div>
@@ -220,7 +220,10 @@ export default {
      closeComment(){
       this.dialogcomment=false
       this.editedItem = Object.assign({}, this.defaultItem)
-    }
+    },
+    // reloadcomments(){
+    //   this.
+    // }
   },
   computed: {
 

@@ -36,6 +36,7 @@ import Repository from "@/repository/RepositoryFactory.js";
 import AddcommentComponent from "@/components/meme/AddcommentComponent.vue"
 
 const comments = Repository.get('comment')
+const memes = Repository.get('meme')
 
 export default {
     name: "CommentComponent",
@@ -74,13 +75,19 @@ export default {
             formData.append('text', item.text)
             formData.append('creator', item.creator)
             await this.createComment(formData)
-            this.close()
+            await this.close()
+            this.$emit('reload')
         },
         async createComment(comment) {
             await comments.create(comment)
         },
-        close() {
+        async close() {
             this.dialog = false
+            this.$emit('getmemes')
+            
+
+            
+            
             // this.editedIndex = -1
             // this.editedItem = Object.assign({}, this.defaultItem)
         },

@@ -1,12 +1,12 @@
-from django.shortcuts import render
 from api.models import MemeModel, CategoryModel,  CommentModel, UserModel
 from api.serializers import MemeSerializer, CategorySerializer, CommentSerializer
 from api.serializers import UserSerializer
 from rest_framework import permissions
 # from django.contrib.auth.models import User
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, views
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from django.contrib.auth import get_user_model, login, logout, authenticate
 
 
 
@@ -128,13 +128,52 @@ class CommentView(viewsets.ModelViewSet):
             print(e)
             return Response(status=status.HTTP_400_BAD_REQUEST)
 
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    This viewset automatically provides `list` and `retrieve` actions.
-    """
-    queryset = UserModel.objects.all().order_by('-date_joined')
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = UserModel.objects.all()
+    serializer_class = UserSerializer
+
+class TestAuthView(views.APIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        try:
+            return Response(UserSerializer(request.user).data)
+        except Exception as e:
+            return Response({
+                'status': 'Unauthorized',
+                'message': str(e)
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class LoginView(views.APIView):
+    serializer_class = UserSerializer
+    User = get_user_model()
+
+    def post(self, request):
+        username = request.data.get('username', None)
+        password = request.data.get('password', None)
+        try:
+            user = authenticate(request, username=username, password=password)            
+            if user is not None:
+                login(request, user)
+                return Response(UserSerializer(user).data)
+            raise Exception('Account has no access')
+        except Exception as e:
+            return Response({
+                'status': 'Unauthorized',
+                'message': str(e)
+            }, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class LogoutView(views.APIView):
+    def post(self, request):
+        logout(request)
+        return Response({
+            'status': 'Success',
+            'message': 'Logout succeeded'
+        }, status=status.HTTP_200_OK)
+
 
 class CategoryView(viewsets.ModelViewSet):
     """
