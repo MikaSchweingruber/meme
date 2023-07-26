@@ -93,12 +93,18 @@ WSGI_APPLICATION = 'meme_api.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
-    'http://127.0.0.1:8080'
+    'http://127.0.0.1:8080',
+    'http://10.242.1.198:8080',
+    'http://memes.lab.coop.ch:8080',
+    'http://memes.lab.coop.ch',
 ]
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8080',
-    'http://127.0.0.1:8080'
+    'http://127.0.0.1:8080',
+    'http://10.242.1.198:8080',
+    'http://memes.lab.coop.ch:8080',
+    'http://memes.lab.coop.ch',
 ]
 
 CORS_ORIGIN_REGEX_WHITELIST = [
@@ -107,7 +113,10 @@ CORS_ORIGIN_REGEX_WHITELIST = [
 ]
 CSRF_TRUSTED_ORIGINS = [ 
     'http://localhost:8080',
-    'http://127.0.0.1:8080'
+    'http://127.0.0.1:8080',
+    'http://10.242.1.198:8080',
+    'http://memes.lab.coop.ch:8080',
+    'http://memes.lab.coop.ch',
     ]
 CORS_ALLOW_CREDENTIALS = True
 
