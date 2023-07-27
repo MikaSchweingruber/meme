@@ -49,7 +49,7 @@
 
                 <v-list-item-content>
                   <v-list-item-title> {{ $store.getters.firstName }} {{ $store.getters.lastName }}</v-list-item-title>
-                  <v-list-item-subtitle>SecSol Worker, Destroyer of everything</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{ $store.getters.username }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>

@@ -5,6 +5,7 @@ import RandomMeme from '../components/meme/RandomMeme.vue'
 import MemeComponent from '../components/meme/MemeComponent.vue'
 import Login from '../views/Login.vue'
 import store from "@/store/index";
+import ComingSoon from '../views/ComingSoon.vue'
 import Repository from "@/repository/RepositoryFactory"
 const auth = Repository.get('auth')
 
@@ -29,24 +30,32 @@ const routes = [
     }
   },
   {
-    path: '/memes/dark',
-    name: 'dark',
+    path: '/memes/coop',
+    name: 'Coop',
     component: Meme,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/memes/default',
-    name: 'default',
+    path: '/memes/Gspässli',
+    name: 'Gspässli',
     component: Meme,
     meta: {
       requiresAuth: true
     }
   },
   {
-    path: '/memes/next-level',
-    name: 'next level',
+    path: '/memes/classics',
+    name: 'classics',
+    component: Meme,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/memes/other',
+    name: 'other',
     component: Meme,
     meta: {
       requiresAuth: true
@@ -56,6 +65,14 @@ const routes = [
     path: '/auth',
     name: 'auth',
     component: Login
+  },
+  {
+    path: '/comingsoon',
+    name: 'comingsoon',
+    component: ComingSoon,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/about',

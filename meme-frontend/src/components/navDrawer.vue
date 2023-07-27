@@ -9,13 +9,13 @@
           <v-list-item-title>{{ item.title }}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-      <v-list-group v-else :prepend-icon="item.icon" :key="item.title" no-action color="primary" v-model="item.expand">
+      <v-list-group v-else :prepend-icon="item.icon" :key="item.title" no-action color="white" v-model="item.expand">
         <template v-slot:activator>
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
           </v-list-item-content>
         </template>
-        <v-list-item v-for="item in item.link" :key="item.title" :to="item.link" color="primary">
+        <v-list-item v-for="item in item.link" :key="item.title" :to="item.link" color="white">
   <!--                <v-list-item-action>-->
   <!--                  <v-icon>{{ item.icon }}</v-icon>-->
   <!--                </v-list-item-action>-->
@@ -34,9 +34,11 @@
           items: [
             {title: 'Home', icon: 'mdi-home', link: '/'},
             {title: 'Categories', icon: 'mdi-emoticon-poop', expand: false, link: [
-                {title: 'default', link: '/memes/default'},
-                {title: 'dark', link: '/memes/dark'},
-                {title: 'next-level', link: '/memes/next-level'},
+                {title: 'classics', link: '/memes/classics'},
+                {title: 'Coop',  link: '/memes/coop'},
+                {title: 'Gspässli', link: '/memes/Gspässli'},
+                {title: 'other', link: '/memes/other'},
+                {title: 'videos - coming soon!', link: '/comingsoon'},
                 // {title: '', link: ''},
               ]
             },

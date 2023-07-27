@@ -6,12 +6,10 @@
         <v-card-text>
             <v-container>
                 <v-row>
-                    <v-col cols="12" sm="6" md="4">
+                    <v-col >
                         <v-text-field v-model="editedItem.text" label="Text"></v-text-field>
                     </v-col>
-                    <v-col cols="12" sm="6" md="4">
-                        <v-text-field v-model="editedItem.creator" label="Creator"></v-text-field>
-                    </v-col>             
+                    
 
                 </v-row>
             </v-container>
@@ -26,11 +24,11 @@
 
                 Save
             </v-btn>
-            
+
         </v-card-actions>
 
 
-
+       
 
     </v-card>
 </template>
@@ -54,7 +52,7 @@ export default {
     }),
     created() {
         this.$set(this.editedItem, 'meme', this.meme);
-
+        this.editedItem.creator = this.$store.getters.username
     },
     computed: {
 

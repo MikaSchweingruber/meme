@@ -16,9 +16,9 @@
             <br>
             <v-row>
               <v-col>
-                <v-icon class="icon" @click="like(item.id, 'smik1')" :color="item.likes.includes('smik1') ? 'primary': 'white'">mdi-thumb-up</v-icon>
+                <v-icon class="icon" @click="like(item.id, username)" :color="item.likes.includes(username) ? 'primary': 'white'">mdi-thumb-up</v-icon>
                 {{ item.likes.length  }}
-                <v-icon class="icon" @click="dislike(item.id, 'smik1')" :color="item.dislikes.includes('smik1') ? 'primary': 'white'">mdi-thumb-down</v-icon>
+                <v-icon class="icon" @click="dislike(item.id, username)" :color="item.dislikes.includes(username) ? 'primary': 'white'">mdi-thumb-down</v-icon>
                 {{ item.dislikes.length  }}
                 <v-icon class="icon" @click="comment(item)">mdi-chat</v-icon>
                 {{ item.comments.length }}
@@ -47,7 +47,7 @@
     </v-dialog>
 
     <v-dialog v-model="dialogcomment" max-width="900px">
-      <CommentComponent :editedItem="editedItem" @close="closeComment" @getmemes="getAllMemes" @reload="reloadcomments"/>
+      <CommentComponent :editedItem="editedItem"  @close="closeComment" @getmemes="getAllMemes" @reload="reloadcomments"/>
     </v-dialog>
 
   </div>
@@ -62,8 +62,8 @@ import Repository from "@/repository/RepositoryFactory.js";
 
 
 
-const memes = Repository.get("meme")
-
+const memes = Repository.get('meme')
+const comments = Repository.get('comment')
 
 
 export default {
@@ -76,9 +76,12 @@ export default {
   },
   data: () => ({
     memes: [],
+    comments: [],
+    
     search: '',
     category: '',
     title: '',
+    username: '',
     dialog: false,
     dialogDelete: false,
     dialogcomment: false,
@@ -112,6 +115,8 @@ export default {
         this.updateMemes()
       }
     })
+    this.username = this.$store.getters.username
+    
   },
   watch: {
     $route(to, from) {
@@ -221,9 +226,13 @@ export default {
       this.dialogcomment=false
       this.editedItem = Object.assign({}, this.defaultItem)
     },
-    // reloadcomments(){
-    //   this.
-    // }
+    async reloadcomments(item){
+      //this.closeComment()
+      //location.reload()
+      //this.comment(item)
+    
+      
+    }
   },
   computed: {
 
